@@ -1,0 +1,36 @@
+import React from 'react'
+import { SearchInput } from './shared/SearchInput'
+
+export const WelcomeSection = () => {
+  return (
+    <div className="w-full bg-red-500 text-white 
+    text-center justify-center py-10 px-10">
+      <h1 className="text-5xl font-extrabold">
+        robota.ua - працює на тебе
+      </h1>
+      <SearchInput />
+      <div className="flex justify-between 
+      text-xl mt-10 px-24 gap-2">
+        <p>
+            <b className="font-extrabold">
+                109 844 {" "}
+            </b> 
+            актуальних вакансій від {" "}
+            <b className="font-extrabold">
+                38 790 {" "}
+            </b>
+            компаній
+        </p>
+        <div className="bg-white w-[10px] 
+        h-[10px] rotate-45" />
+        <p>
+            <b className="font-extrabold">
+                5 588 028 {" "}
+            </b>
+            кандидатів довірили нам власне резюме
+        </p>
+      </div>
+    </div>
+  )
+}
+
