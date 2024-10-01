@@ -1,4 +1,6 @@
-import { Banner, WelcomeSection } from "@/components";
+import { Banner, CompaniesList, 
+  MessangerBanner, WelcomeSection, 
+  PopularSection, Footer} from "@/components";
 import Header from "../components/Header";
 
 export default function Home() {
@@ -7,6 +9,10 @@ export default function Home() {
       <Header />
       <WelcomeSection />
       <Banner />
+      <CompaniesList />
+      <MessangerBanner />
+      <PopularSection />
+      <Footer />
     </div>
   );
 }
