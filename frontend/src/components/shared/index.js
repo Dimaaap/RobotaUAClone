@@ -3,3 +3,9 @@ export { MessangersBtn } from "./MessangersBtn"
 export { PopularItemCart } from "./PopularItemCart"
 export { PopularItem } from "./PopularItem"
 export { Footer } from "./Footer"
+export { TopFooter } from "./TopFooter"
+export { BottomFooter } from "./BottomFooter"
+export { RobotaPartnersLink } from "./RobotaPartnersLink"
+export { RotateSquare } from "./RotateSquare"
+export { SocialMediaContainer } from "./SocialMediaContainer";
+export { UploadAppBtn } from './UploadAppBtn';
