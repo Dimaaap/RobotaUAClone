@@ -1,13 +1,18 @@
 import React from 'react'
 import { SearchInput } from './shared/SearchInput'
+import Image from "next/image";
 
 export const WelcomeSection = () => {
   return (
     <div className="w-full bg-red-500 text-white 
-    text-center justify-center py-10 px-10">
+    text-center justify-center py-10 px-10 relative">
       <h1 className="text-5xl font-extrabold">
         robota.ua - працює на тебе
       </h1>
+      <Image src="desktop-home-dog.svg" 
+        width={200} height={250}
+        className="absolute top-2"
+      />
       <SearchInput />
       <div className="flex justify-between 
       text-xl mt-10 px-24 gap-2">

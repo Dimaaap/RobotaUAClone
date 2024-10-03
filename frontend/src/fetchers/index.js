@@ -1,0 +1,1 @@
+export { getTopCities } from "./fetchTopCities";

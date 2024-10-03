@@ -1,2 +1,8 @@
 from django.urls import path
 
+from .views import *
+
+urlpatterns = [
+    path("", CitiesViewSet.as_view({"get": "list"}), name="all_cities"),
+    path("top-cities", TopCitiesViewSet.as_view({"get": "list"}), name="top_cities")
+]
