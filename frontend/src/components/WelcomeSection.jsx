@@ -1,8 +1,15 @@
-import React from 'react'
+"use client";
+
+import React, { useState } from 'react'
 import { SearchInput } from './shared/SearchInput'
 import Image from "next/image";
+import { SearchLocationModal } from './modals';
+import { useChooseLocationOpen } from '@/store';
 
 export const WelcomeSection = () => {
+
+  const { chooseLocationOpen, toggleChooseLocationOpen } = useChooseLocationOpen();
+
   return (
     <div className="w-full bg-red-500 text-white 
     text-center justify-center py-10 px-10 relative">
@@ -14,6 +21,11 @@ export const WelcomeSection = () => {
         className="absolute top-2"
       />
       <SearchInput />
+
+      {
+        chooseLocationOpen && <SearchLocationModal />
+      }
+
       <div className="flex justify-between 
       text-xl mt-10 px-24 gap-2">
         <p>

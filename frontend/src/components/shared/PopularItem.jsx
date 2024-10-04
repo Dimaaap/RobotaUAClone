@@ -21,11 +21,11 @@ export const PopularItem = ({ sectionTitle,
         </div>
         <div className="flex flex-row gap-3 mt-2">
             {
-                iterableObject.map((object) => (
+                iterableObject.map((object, index) => (
                     <PopularItemCart 
-                        key={object.id}
-                        title={object.title}
-                        href={object.href}
+                        key={index}
+                        title={object.title || object.city_title}
+                        href={object.href || object.slug}
                     />
                 ))
             }

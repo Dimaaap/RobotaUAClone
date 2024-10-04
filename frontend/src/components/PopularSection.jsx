@@ -1,21 +1,12 @@
 "use client";
 
-import React, { useEffect } from 'react'
+import React from 'react'
 import { popularProfessions } from '@/data/popular-professions'
 import { popularCities } from '@/data/popular-cities'
 import { PopularItem } from './shared'
-import { getTopCities } from '@/fetchers'
 
 export const PopularSection = () => {
 
-  const fetchTopCities = async () => {
-    const cities = await getTopCities();
-    return cities
-  }
-
-  useEffect(() => {
-    console.log(fetchTopCities())
-  })
 
   return (
     <>
