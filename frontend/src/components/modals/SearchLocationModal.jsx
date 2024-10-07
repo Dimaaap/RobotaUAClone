@@ -2,41 +2,52 @@
 
 import React, { useState, useEffect } from 'react'
 import { Search } from "lucide-react"
-import { getAllCities, getTopCities } from '@/fetchers';
-import Link from 'next/link';
-import { useAllCitiesStore } from '@/store';
+import { getAllCities, getTopCities } from '../../fetchers';
+import { useAllCitiesStore } from '../../store';
+import { CityLink, NotFoundCity } from '../shared';
 
 export const SearchLocationModal = () => {
 
     const [topCities, setTopCities] = useState([])
+    const [filteredCities, setFilteredCities] = useState([])
     const [showAllCities, setShowAllCities] = useState(false);
     const [loading, setLoading] = useState(false);
     const [searchValue, setSearchValue] = useState("")
-
+    const [startSearch, setStartSearch] = useState(false);
+ 
     const { allCities, setAllCities } = useAllCitiesStore();
 
     const handleChangeSearchValue = (e) => {
-        setSearchValue(e.target.value);
-        console.log(allCities)
-        const filteredCities = allCities.filter(city => city.city_title.toLowerCase().includes(searchValue.toLowerCase()))
-        console.log(filteredCities)
-    }
-
-    const fetchAllCities = async () => {
-        setLoading(true);
-        try {
-            const fetchedCities = await getAllCities();
-            setAllCities(fetchedCities);
-        } catch(error) {
-            console.error("Failed to fetch cities", error);
-        } finally {
-            setLoading(false);
-            setShowAllCities(true);
+        if(searchValue.length === 0){
+            setStartSearch(false)
         }
+        else {
+            setStartSearch(true)
+        }
+        setSearchValue(e.target.value);
+        const filteredCities = allCities.filter(city => city.city_title.toLowerCase().includes(searchValue.toLowerCase()))
+        setFilteredCities(filteredCities)
+        
     }
 
     useEffect(() => {
+        const fetchAllCities = async () => {
+            setLoading(true);
+            try {
+                const fetchedCities = await getAllCities();
+                setAllCities(fetchedCities);
+            } catch(error) {
+                console.error("Failed to fetch cities", error);
+            } finally {
+                setLoading(false);  
+            }}
+        fetchAllCities();
+    }, [])
+
+
+    useEffect(() => {
         const fetchTopCities = async () => {
+            setLoading(true)
             try {
                 const cities = await getTopCities();
                 cities.push({
@@ -51,6 +62,9 @@ export const SearchLocationModal = () => {
                 setTopCities(cities);
             } catch(error){
                 console.error("Failed to fetch top cities: ", error)
+            }
+            finally{
+                setLoading(false)
             }
         }
         fetchTopCities();
@@ -75,23 +89,21 @@ export const SearchLocationModal = () => {
         </div>
         <div className="mt-4 flex flex-col text-black 
         text-left">
-            { topCities.length > 0 ?
+            { topCities.length > 0 && searchValue.length === 0 ?
                 (
                     topCities.map((city, index) => (
-                        <Link
-                        key={index}
-                        href={city.slug} 
-                        className="px-6 py-3
-                        hover:bg-gray-100 font-semibold">
-                            { city.city_title }
-                        </Link>
+                        <CityLink index={index} city={city} />
                 )) 
              ) : (
-                Array(10).fill(0).map((_) => (
-                    <div className="w-[90%] ml-[5%] 
-                    h-[20px] bg-gray-200 mb-4 rounded-xl" />
-                ))
-            )}
+                filteredCities.length > 0 ? (
+                    filteredCities.map((city, index) => (
+                        <CityLink index={index} city={city} />
+                    ))    
+                ) : (
+                    <NotFoundCity />
+                )
+             ) 
+            }
         </div>
 
         { 
@@ -99,13 +111,7 @@ export const SearchLocationModal = () => {
                 <div className="border-t-2 border-black/20
                 flex flex-col">
                     {allCities.map((city, index) => (
-                    <Link key={index} 
-                    href={city.slug}
-                    className="px-6 py-3 
-                    hover:bg-gray-100 font-semibold 
-                    text-black text-left">
-                        { city.city_title }
-                    </Link>
+                    <CityLink index={index} city={city} />
                 ))}
                 </div>
             ) : (
@@ -114,14 +120,14 @@ export const SearchLocationModal = () => {
         }
 
         {
-            !showAllCities && (
+            !showAllCities && !startSearch && (
                 <button type="button" 
                 className="border-[3px] border-red-500 
                 rounded-md bg-white text-red-500 
                 py-2 px-5 w-[85%] ml-[8%] font-extrabold 
                 mt-5 text-[1.1rem] hover:text-red-600 
                 hover:border-red-600"
-                onClick={fetchAllCities} disabled={loading}>
+                onClick={() => setShowAllCities(true)} disabled={loading}>
                     {loading ? "Завантаження...": "Усі міста України"}
                 </button>
             )

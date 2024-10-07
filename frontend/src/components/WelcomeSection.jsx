@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from 'react'
+import React from 'react'
 import { SearchInput } from './shared/SearchInput'
 import Image from "next/image";
 import { SearchLocationModal } from './modals';
-import { useChooseLocationOpen } from '@/store';
+import { useChooseLocationOpen } from '../store';
 
 export const WelcomeSection = () => {
 

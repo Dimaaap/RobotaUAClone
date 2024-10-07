@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
 import Link from "next/link";
-import { useDefaultLanguageStore, useLanguageOpen } from '@/store';
+import { useDefaultLanguageStore, useLanguageOpen } from '../../store';
 
 export const ChooseLanguagePopup = forwardRef((props, ref) => {
     
     const { language, setLanguage } = useDefaultLanguageStore();
-    const { closeChooseLanguageOpen } = useLanguageOpen()
+    const { closeChooseLanguageOpen } = useLanguageOpen();
     
     const handleClick = (language) => {
         setLanguage(language);

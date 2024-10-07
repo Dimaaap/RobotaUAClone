@@ -1,6 +1,6 @@
 import { Banner, CompaniesList, 
   MessangerBanner, WelcomeSection, 
-  PopularSection, Footer} from "@/components";
+  PopularSection, Footer} from "../components";
 import Header from "../components/Header";
 
 export default function Home() {

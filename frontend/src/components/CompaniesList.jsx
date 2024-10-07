@@ -1,5 +1,5 @@
 import React from 'react'
-import { companiesList } from '@/data/companies-list'
+import { companiesList } from '../data/companies-list'
 import { CompanyLogo } from './shared'
 
 export const CompaniesList = () => {

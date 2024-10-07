@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from 'react'
-import { useDefaultLanguageStore, useLanguageOpen } from '@/store';
+import { useDefaultLanguageStore, useLanguageOpen } from '../../store';
 import Image from "next/image";
 import Link from "next/link";
 

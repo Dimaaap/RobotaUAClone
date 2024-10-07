@@ -1,6 +1,6 @@
 import React from 'react'
 import { Search, MapPin, ChevronDown, ChevronUp } from 'lucide-react'
-import { useChooseLocationOpen } from '@/store'
+import { useChooseLocationOpen } from '../../store'
 
 export const SearchInput = () => {
 

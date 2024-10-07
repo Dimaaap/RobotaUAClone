@@ -1,9 +1,9 @@
 "use client";
 
 import React from 'react'
-import { popularProfessions } from '@/data/popular-professions'
-import { popularCities } from '@/data/popular-cities'
+import { popularCities } from '../data/popular-cities'
 import { PopularItem } from './shared'
+import { popularProfessions } from '../data/popular-professions';
 
 export const PopularSection = () => {
 
@@ -20,7 +20,7 @@ export const PopularSection = () => {
         sectionTitle="Популярні міста"
         linkTitle="Подивитись всі міста"
         iterableObject={popularCities}
-        sectionLink='#'
+        sectionLink='jobsearch/cities'
         />   
     </>
   )
