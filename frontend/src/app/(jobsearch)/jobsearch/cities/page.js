@@ -1,4 +1,4 @@
-import { CartCities, JobsearchCategory } from "../../../../components"
+import { CartCities, CitiesByTitleContainer, JobsearchCategory } from "../../../../components"
 
 
 export default function CitiesJobsearch () {
@@ -8,6 +8,7 @@ export default function CitiesJobsearch () {
             <div className="bg-gray-100 w-full min-h-screen 
             py-4">
                <CartCities /> 
+               <CitiesByTitleContainer />
             </div>
             
         </div>

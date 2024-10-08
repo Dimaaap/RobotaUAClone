@@ -5,7 +5,5 @@
     <mapping directory="$PROJECT_DIR$/../NextPizza" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../NextPizza/NextPizza2.0" vcs="Git" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../angular-web" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../angular-web/store" vcs="Git" />
   </component>
 </project>

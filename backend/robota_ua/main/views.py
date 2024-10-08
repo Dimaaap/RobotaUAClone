@@ -22,6 +22,6 @@ class TopCitiesViewSet(viewsets.ModelViewSet):
 
 
 class CartsCitiesViewSet(viewsets.ModelViewSet):
-    queryset = City.objects.filter(city_title__in=CARTS_CITIES)
+    queryset = City.objects.filter(city_title__in=CARTS_CITIES).exclude(city_image="")
     serializer_class = CitySerializer
     permission_classes = [AllowAny]
