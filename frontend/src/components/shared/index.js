@@ -14,3 +14,4 @@ export { CityLink } from "./CityLink";
 export { JobsearchCategory } from "./JobsearchCategory";
 export { CityCard } from "./CityCard";
 export { CartCities } from "./CartCities";
+export { CityOrRegionChoise } from "./CityOrRegionChoise"

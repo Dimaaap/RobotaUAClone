@@ -12,8 +12,14 @@ export const CartCities = () => {
     useEffect(() => {
         const fetchCartCities = async() => {
             try {
-                const fetchedCities = await getCartCities();
-                setCartCities(fetchedCities);
+                const cachedCities = localStorage.getItem("cartCities");
+                if (cachedCities){
+                    setCartCities(JSON.parse(cachedCities));
+                } else {
+                    const fetchedCities = await getCartCities();
+                    setCartCities(fetchedCities);
+                    localStorage.setItem("cartCities", JSON.stringify(fetchedCities));
+                }
             } catch(error) {
                 console.error(error)
             }

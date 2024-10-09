@@ -1,8 +1,9 @@
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 
-from .models import City
+from .models import City, ProfessionRubrics
 from .serializers.cities_serializer import CitySerializer
+from .serializers.professions_rubrics_serializer import ProfessionRubricsSerializer
 
 TOP_CITIES = ["Київ", "Дніпро", "Харків", "Запоріжжя", "Одеса", "Львів"]
 CARTS_CITIES = ["Київ", "Харків", "Львів", "Одеса", "Дніпро", "Запоріжжя", "Кривий Ріг",
@@ -24,4 +25,10 @@ class TopCitiesViewSet(viewsets.ModelViewSet):
 class CartsCitiesViewSet(viewsets.ModelViewSet):
     queryset = City.objects.filter(city_title__in=CARTS_CITIES).exclude(city_image="")
     serializer_class = CitySerializer
+    permission_classes = [AllowAny]
+
+
+class ProfessionRubricViewSet(viewsets.ModelViewSet):
+    queryset = ProfessionRubrics.objects.all().order_by("title")
+    serializer_class = ProfessionRubricsSerializer
     permission_classes = [AllowAny]

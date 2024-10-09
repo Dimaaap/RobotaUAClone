@@ -33,3 +33,23 @@ class City(models.Model):
 
     def __str__(self):
         return f'{self.city_title} {self.slug}'
+
+
+class ProfessionRubrics(models.Model):
+    rubric_id = models.UUIDField(primary_key=True, default=uuid4)
+    title = models.CharField(max_length=150, default="")
+    slug = models.SlugField(max_length=150, default="")
+
+    def __str__(self):
+        return f'{self.title} {self.slug}'
+
+
+class Profession(models.Model):
+    profession_id = models.UUIDField(primary_key=True, default=uuid4)
+    title = models.CharField(max_length=100, default="")
+    slug = models.CharField(max_length=100, default="")
+
+    rubric_id = models.ForeignKey(ProfessionRubrics, on_delete=models.CASCADE, default="")
+
+    def __str__(self):
+        return f"{self.title} {self.slug}"
