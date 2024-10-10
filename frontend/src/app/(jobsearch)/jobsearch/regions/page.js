@@ -1,9 +1,12 @@
-import { CitiesByRegionsContainer } from "../../../../components";
+import { CitiesByRegionsContainer, JobsearchCategory, CartCities } from "../../../../components";
 
 export default function RegionsJobsearch () {
     return (
         <div className="w-full h-full p-0 m-0">
-            <CitiesByRegionsContainer />
+                <JobsearchCategory />
+                <CartCities /> 
+                <CitiesByRegionsContainer />
         </div>
+        
     )
 }

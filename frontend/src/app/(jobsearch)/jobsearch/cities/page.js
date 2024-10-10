@@ -4,7 +4,9 @@ import { CartCities, CitiesByTitleContainer, Footer, JobsearchCategory } from ".
 export default function CitiesJobsearch () {
     return (
         <div className="w-full h-full p-0 m-0">
-               <CitiesByTitleContainer />
+                <JobsearchCategory />
+                <CartCities /> 
+                <CitiesByTitleContainer />
         </div>
     )
 }

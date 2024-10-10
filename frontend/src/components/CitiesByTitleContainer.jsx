@@ -36,7 +36,7 @@ export const CitiesByTitleContainer = () => {
 
   return (
     <div className="bg-white w-[94%] ml-[2.5%]
-    mt-10 flex flex-col gap-5
+    mt-10 flex flex-col gap-2
     rounded-md p-10">
       <CityOrRegionChoise />
       <div className="">

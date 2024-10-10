@@ -49,7 +49,7 @@ class Profession(models.Model):
     title = models.CharField(max_length=100, default="")
     slug = models.CharField(max_length=100, default="")
 
-    rubric_id = models.ForeignKey(ProfessionRubrics, on_delete=models.CASCADE, default="")
+    rubric_id = models.ManyToManyField(ProfessionRubrics, default="")
 
     def __str__(self):
         return f"{self.title} {self.slug}"
