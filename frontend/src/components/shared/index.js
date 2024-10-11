@@ -15,3 +15,5 @@ export { JobsearchCategory } from "./JobsearchCategory";
 export { CityCard } from "./CityCard";
 export { CartCities } from "./CartCities";
 export { CityOrRegionChoise } from "./CityOrRegionChoise"
+export { AuthVariantsBlock } from "./AuthVariantsBlocks" 
+export { ChooseRole } from "./ChooseRole"
