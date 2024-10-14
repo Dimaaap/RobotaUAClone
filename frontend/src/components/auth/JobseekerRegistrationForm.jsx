@@ -1,13 +1,34 @@
+"use client";
+
 import React from 'react'
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { UserRound } from 'lucide-react'
 import { FaSquareFacebook } from "react-icons/fa6"
 import { FcGoogle } from "react-icons/fc";
+import { jobseekerSchema } from '../../schemas'
 
 export const JobseekerRegistrationForm = () => {
+
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: zodResolver(jobseekerSchema),
+    });
+
+    const onSubmit = async(data) => {
+        const response = await fetch("api/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+    }
+
   return (
     <form className="bg-white py-7 px-5 
     rounded-md flex flex-col gap-4 mt-[8%] w-[50%] 
     ml-[30%]"
+    onSubmit={handleSubmit(onSubmit)}
     method='post'>
         <h1 className="font-extrabold text-2xl 
         text-center">
@@ -45,7 +66,14 @@ export const JobseekerRegistrationForm = () => {
         <div className="relative w-full px-10">
             <input className="h-[60px] w-full 
             border border-black rounded-md px-12" 
-            placeholder="Ім'я та прізвище"/>
+            placeholder="Ім'я та прізвище"
+            {...register("fullName")}/>
+            {
+                errors.fullName && 
+                <p>
+                    { errors.fullName.message }
+                </p>
+            }
             <UserRound className="absolute 
             text-gray-400 top-5 left-14" />
         </div>
@@ -53,7 +81,12 @@ export const JobseekerRegistrationForm = () => {
         <div className="relative w-full px-10 mt-1">
             <input className="h-[60px] w-full 
             border border-black rounded-md px-12" 
-            placeholder="Email або номер телефону"/>
+            placeholder="Email або номер телефону"
+            type="email"
+            {...register("email")}/>
+            {errors.email && <p>
+                { errors.email.message }
+            </p>}
             <UserRound className="absolute 
             text-gray-400 top-5 left-14" />
         </div>
