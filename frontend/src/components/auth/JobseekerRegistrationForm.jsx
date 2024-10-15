@@ -1,28 +1,36 @@
 "use client";
 
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UserRound } from 'lucide-react'
+import { UserRound, KeyRound, Eye, EyeOff } from 'lucide-react'
 import { FaSquareFacebook } from "react-icons/fa6"
 import { FcGoogle } from "react-icons/fc";
 import { jobseekerSchema } from '../../schemas'
+import { createJobseekerHandler } from '../../fetchers';
+import { FormError } from '../shared';
 
 export const JobseekerRegistrationForm = () => {
+
+    const [fullName, setFullName] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [isPasswordInputShow, setIsPasswordInputShow] = useState(false)
+    const [isPasswordShow, setIsPasswordShow] = useState(false)
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(jobseekerSchema),
     });
 
-    const onSubmit = async(data) => {
-        const response = await fetch("api/register", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
-        });
-
-        const result = await response.json();
-    }
+   const onSubmit = async(event) => {
+        event.preventDefault();
+        try {
+            const response = await createJobseekerHandler(e.target)
+            console.log(response)
+        } catch (error) {
+            console.error("Error", error)
+        }
+   }
 
   return (
     <form className="bg-white py-7 px-5 
@@ -64,31 +72,80 @@ export const JobseekerRegistrationForm = () => {
         </div>
 
         <div className="relative w-full px-10">
-            <input className="h-[60px] w-full 
-            border border-black rounded-md px-12" 
+            <label className={`absolute bg-white px-1 -top-2.5 left-16 
+            text-gray-500 text-[0.8rem] 
+            ${fullName.length > 0 ? "visible" : "hidden"}`}>
+                Ім'я та прізвище
+            </label>
+            <input className={`h-[60px] w-full 
+            border rounded-md px-12 
+            ${errors.fullName ? "border-red-500 outline-none placeholder-red-500": 
+            "border-black"}`}
             placeholder="Ім'я та прізвище"
-            {...register("fullName")}/>
+            {...register("fullName")}
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}/>
             {
                 errors.fullName && 
-                <p>
-                    { errors.fullName.message }
-                </p>
+                <FormError textError={errors.fullName.message} />
             }
             <UserRound className="absolute 
-            text-gray-400 top-5 left-14" />
+            text-gray-400 top-4 left-14" />
         </div>
 
         <div className="relative w-full px-10 mt-1">
-            <input className="h-[60px] w-full 
-            border border-black rounded-md px-12" 
-            placeholder="Email або номер телефону"
+            <label className={`absolute bg-white px-1 top-0 left-16 
+            text-gray-500 text-[0.8rem] transition-transform ease-in duration-700 
+            -translate-y-2
+            ${email.length > 0 ? "visible": "hidden"}`}>
+                Email
+            </label>
+            <input className={`h-[60px] w-full 
+            border border-black rounded-md px-12 
+             ${errors.fullName ? "border-red-500 outline-none placeholder-red-500": 
+            "border-black"}`}
+            placeholder="Email"
             type="email"
-            {...register("email")}/>
-            {errors.email && <p>
-                { errors.email.message }
-            </p>}
+            {...register("email")}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}/>
+            {errors.email && <FormError textError={errors.email.message} />}
             <UserRound className="absolute 
             text-gray-400 top-5 left-14" />
+        </div>
+        <div className="relative w-full px-10 mt-1">
+        <label className={`absolute bg-white px-1 top-0 left-16 
+            text-gray-500 text-[0.8rem] transition-transform ease-in duration-700 
+            -translate-y-2
+            ${password.length > 0 ? "visible": "hidden"}`}>
+                Пароль для входу
+            </label>
+        <input className={`h-[60px] w-full 
+            border rounded-md px-12 
+            ${errors.password ? "border-red-500 outline-none placeholder-red-500": 
+            "border-black"}`}
+            placeholder="Пароль для входу"
+            {...register("password")}
+            value={password}
+            type={`${isPasswordShow ? "text" : "password"}`}
+            onChange={(e) => setPassword(e.target.value)}/>
+            {
+                errors.password && 
+                <FormError textError={errors.password.message} />
+            }
+            <KeyRound className="absolute 
+            text-gray-400 top-5 left-14" />
+            {
+                isPasswordShow ? 
+                (
+                    <EyeOff className="absolute text-gray-400 top-5 right-14 cursor-pointer " 
+                    onClick={() => setIsPasswordShow(false)}/>
+                )
+                :(
+                <Eye className="absolute text-gray-400 top-5 right-14 cursor-pointer" 
+                onClick={() => setIsPasswordShow(true)}/>
+                )
+            }
         </div>
 
         <button type="submit" className="w-[88%] ml-[6%]
