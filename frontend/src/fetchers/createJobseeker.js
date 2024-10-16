@@ -1,12 +1,14 @@
-const CREATE_JOBSEEKER_URL = "https://127.0.0.1:800/api/auth/register/jobseeker"
+const CREATE_JOBSEEKER_URL = "http://127.0.0.1:8000/api/auth/register/jobseeker"
 
 export async function createJobseekerHandler(req) {
+    console.log(req)
     const response = await fetch(CREATE_JOBSEEKER_URL, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(req.body)
+        body: JSON.stringify(req),
+        credentials: 'include'
     })
     if(!response.ok){
         throw new Error("Failed to create a new jobseeker")

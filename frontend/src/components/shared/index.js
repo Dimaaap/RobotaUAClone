@@ -18,4 +18,5 @@ export { CityOrRegionChoise } from "./CityOrRegionChoise"
 export { AuthVariantsBlock } from "./AuthVariantsBlocks" 
 export { ChooseRole } from "./ChooseRole"
 export { FormError } from './FormError';
-export { FormInputWithErrors } from "./FormInputWithErrors"
+export { FormInputWithErrors } from "./FormInputWithErrors";
+export { RequiredStar } from "./RequiredStar";

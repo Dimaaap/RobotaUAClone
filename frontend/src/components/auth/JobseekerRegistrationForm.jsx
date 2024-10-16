@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserRound, KeyRound, Eye, EyeOff } from 'lucide-react'
@@ -8,7 +8,7 @@ import { FaSquareFacebook } from "react-icons/fa6"
 import { FcGoogle } from "react-icons/fc";
 import { jobseekerSchema } from '../../schemas'
 import { createJobseekerHandler } from '../../fetchers';
-import { FormError } from '../shared';
+import { FormError, RequiredStar } from '../shared';
 
 export const JobseekerRegistrationForm = () => {
 
@@ -23,14 +23,25 @@ export const JobseekerRegistrationForm = () => {
     });
 
    const onSubmit = async(event) => {
-        event.preventDefault();
         try {
-            const response = await createJobseekerHandler(e.target)
+            const response = await createJobseekerHandler(event)
             console.log(response)
         } catch (error) {
             console.error("Error", error)
         }
    }
+
+   const handlePasswordShow = () => {
+    if(email.includes("@")){
+        setIsPasswordInputShow(true);
+    } else {
+        setIsPasswordInputShow(false);
+    }
+   }
+
+   useEffect(() => {
+    handlePasswordShow()
+   }, [email])
 
   return (
     <form className="bg-white py-7 px-5 
@@ -73,21 +84,22 @@ export const JobseekerRegistrationForm = () => {
 
         <div className="relative w-full px-10">
             <label className={`absolute bg-white px-1 -top-2.5 left-16 
-            text-gray-500 text-[0.8rem] 
+            text-gray-500 text-[0.8rem] flex flex-row gap-1
             ${fullName.length > 0 ? "visible" : "hidden"}`}>
-                Ім'я та прізвище
+                Ім'я та прізвище 
+                <RequiredStar />
             </label>
             <input className={`h-[60px] w-full 
             border rounded-md px-12 
-            ${errors.fullName ? "border-red-500 outline-none placeholder-red-500": 
+            ${errors.full_name ? "border-red-500 outline-none placeholder-red-500": 
             "border-black"}`}
             placeholder="Ім'я та прізвище"
-            {...register("fullName")}
+            {...register("full_name")}
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}/>
             {
-                errors.fullName && 
-                <FormError textError={errors.fullName.message} />
+                errors.full_name && 
+                <FormError textError={errors.full_name.message} />
             }
             <UserRound className="absolute 
             text-gray-400 top-4 left-14" />
@@ -96,13 +108,14 @@ export const JobseekerRegistrationForm = () => {
         <div className="relative w-full px-10 mt-1">
             <label className={`absolute bg-white px-1 top-0 left-16 
             text-gray-500 text-[0.8rem] transition-transform ease-in duration-700 
-            -translate-y-2
+            -translate-y-2 flex flex-row gap-1
             ${email.length > 0 ? "visible": "hidden"}`}>
                 Email
+                <RequiredStar />
             </label>
             <input className={`h-[60px] w-full 
             border border-black rounded-md px-12 
-             ${errors.fullName ? "border-red-500 outline-none placeholder-red-500": 
+             ${errors.email ? "border-red-500 outline-none placeholder-red-500": 
             "border-black"}`}
             placeholder="Email"
             type="email"
@@ -113,40 +126,43 @@ export const JobseekerRegistrationForm = () => {
             <UserRound className="absolute 
             text-gray-400 top-5 left-14" />
         </div>
-        <div className="relative w-full px-10 mt-1">
-        <label className={`absolute bg-white px-1 top-0 left-16 
-            text-gray-500 text-[0.8rem] transition-transform ease-in duration-700 
-            -translate-y-2
-            ${password.length > 0 ? "visible": "hidden"}`}>
-                Пароль для входу
-            </label>
-        <input className={`h-[60px] w-full 
-            border rounded-md px-12 
-            ${errors.password ? "border-red-500 outline-none placeholder-red-500": 
-            "border-black"}`}
-            placeholder="Пароль для входу"
-            {...register("password")}
-            value={password}
-            type={`${isPasswordShow ? "text" : "password"}`}
-            onChange={(e) => setPassword(e.target.value)}/>
-            {
-                errors.password && 
-                <FormError textError={errors.password.message} />
-            }
-            <KeyRound className="absolute 
-            text-gray-400 top-5 left-14" />
-            {
-                isPasswordShow ? 
-                (
-                    <EyeOff className="absolute text-gray-400 top-5 right-14 cursor-pointer " 
-                    onClick={() => setIsPasswordShow(false)}/>
-                )
-                :(
-                <Eye className="absolute text-gray-400 top-5 right-14 cursor-pointer" 
-                onClick={() => setIsPasswordShow(true)}/>
-                )
-            }
-        </div>
+        {isPasswordInputShow && (
+            <div className="relative w-full px-10 mt-1">
+            <label className={`absolute bg-white px-1 top-0 left-16 
+                text-gray-500 text-[0.8rem] transition-transform ease-in duration-700 
+                -translate-y-2 flex flex-row gap-1
+                ${password.length > 0 ? "visible": "hidden"}`}>
+                    Пароль для входу
+                    <RequiredStar />
+                </label>
+            <input className={`h-[60px] w-full 
+                border rounded-md px-12 
+                ${errors.password ? "border-red-500 outline-none placeholder-red-500": 
+                "border-black"}`}
+                placeholder="Пароль для входу"
+                {...register("password")}
+                value={password}
+                type={`${isPasswordShow ? "text" : "password"}`}
+                onChange={(e) => setPassword(e.target.value)}/>
+                {
+                    errors.password && 
+                    <FormError textError={errors.password.message} />
+                }
+                <KeyRound className="absolute 
+                text-gray-400 top-5 left-14" />
+                {
+                    isPasswordShow ? 
+                    (
+                        <EyeOff className="absolute text-gray-400 top-5 right-14 cursor-pointer " 
+                        onClick={() => setIsPasswordShow(false)}/>
+                    )
+                    :(
+                    <Eye className="absolute text-gray-400 top-5 right-14 cursor-pointer" 
+                    onClick={() => setIsPasswordShow(true)}/>
+                    )
+                }
+            </div>
+        )}
 
         <button type="submit" className="w-[88%] ml-[6%]
         bg-red-500 text-white font-bold mt-1

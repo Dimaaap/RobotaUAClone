@@ -12,7 +12,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = jobseeker
         fields = ("email", "password", "full_name")
-        
+
     def create(self, validated_data):
         new_jobseeker = jobseeker.objects.create_user(**validated_data)
         return new_jobseeker
