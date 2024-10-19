@@ -25,9 +25,7 @@ export const JobseekerRegistrationForm = () => {
    const onSubmit = async(event) => {
         try {
             const response = await createJobseekerHandler(event)
-            console.log(response)
         } catch (error) {
-            console.error("Error", error)
         }
    }
 
