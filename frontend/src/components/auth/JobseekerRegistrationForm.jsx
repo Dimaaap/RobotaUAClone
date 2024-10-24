@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react'
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserRound, KeyRound, Eye, EyeOff } from 'lucide-react'
@@ -9,6 +10,7 @@ import { FcGoogle } from "react-icons/fc";
 import { jobseekerSchema } from '../../schemas'
 import { createJobseekerHandler } from '../../fetchers';
 import { FormError, RequiredStar } from '../shared';
+import { useUser } from '../../store';
 
 export const JobseekerRegistrationForm = () => {
 
@@ -17,15 +19,21 @@ export const JobseekerRegistrationForm = () => {
     const [password, setPassword] = useState("")
     const [isPasswordInputShow, setIsPasswordInputShow] = useState(false)
     const [isPasswordShow, setIsPasswordShow] = useState(false)
+    const { push } = useRouter();
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(jobseekerSchema),
     });
 
    const onSubmit = async(event) => {
+
         try {
             const response = await createJobseekerHandler(event)
+            const setAuth = useUser.getState().setAuth;
+            setAuth(true, response.tokens)
+            push("/wizard");
         } catch (error) {
+            console.error(error);
         }
    }
 

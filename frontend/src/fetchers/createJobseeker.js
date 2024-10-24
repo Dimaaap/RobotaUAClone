@@ -12,5 +12,8 @@ export async function createJobseekerHandler(req) {
     if(!response.ok){
         throw new Error("Failed to create a new jobseeker")
     }
-    return response.json();
+    const data = await response.json();
+    localStorage.setItem("accessToken", data.tokens.access);
+    localStorage.setItem("refreshToken", data.tokens.refresh)
+    return data
 }

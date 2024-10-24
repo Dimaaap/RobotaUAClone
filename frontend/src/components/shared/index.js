@@ -20,3 +20,4 @@ export { ChooseRole } from "./ChooseRole"
 export { FormError } from './FormError';
 export { FormInputWithErrors } from "./FormInputWithErrors";
 export { RequiredStar } from "./RequiredStar";
+export { AuthUserHeader } from "./AuthUserHeader"
